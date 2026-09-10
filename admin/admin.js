@@ -97,24 +97,7 @@
   function enterDashboard(session) {
     show("dashboard");
     document.getElementById("userEmail").textContent = session.user.email;
-    var editSlug = new URLSearchParams(location.search).get("edit");
-    if (editSlug) {
-      document.querySelectorAll(".admin-tab").forEach(function (b) { b.classList.remove("active"); });
-      document.querySelectorAll(".admin-panel").forEach(function (p) { p.classList.remove("active"); });
-      var blogTabBtn = document.querySelector('.admin-tab[data-tab="blog"]');
-      if (blogTabBtn) blogTabBtn.classList.add("active");
-      document.getElementById("panel-blog").classList.add("active");
-      loadBlog().then(function () { jumpToPost(editSlug); });
-    } else {
-      loadBanners();
-    }
-  }
-  function jumpToPost(slug) {
-    var row = document.querySelector('.admin-row[data-slug="' + slug.replace(/"/g, "") + '"]');
-    if (!row) return;
-    row.scrollIntoView({ block: "center", behavior: "smooth" });
-    row.classList.add("highlight");
-    setTimeout(function () { row.classList.remove("highlight"); }, 2200);
+    loadBanners();
   }
 
   function escapeHtml(s) {

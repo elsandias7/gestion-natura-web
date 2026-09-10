@@ -32,7 +32,7 @@
     <div class="pagehero-media"><img src="assets/img/photos/hero-relleno.jpg?v=2" alt="Blog de Gestión Natura"></div>
     <div class="pagehero-overlay"></div>
     <div class="container">
-      <p class="breadcrumb"><a href="index.html">Inicio</a> / <a href="blog.html">Blog</a> / <span id="crumbTitle">Artículo</span> <a id="editLink" href="#" hidden style="margin-left:10px;color:var(--gold-400)">✎ Editar</a></p>
+      <p class="breadcrumb"><a href="index.html">Inicio</a> / <a href="blog.html">Blog</a> / <span id="crumbTitle">Artículo</span></p>
       <h1 id="postTitleHeading">Cargando artículo…</h1>
     </div>
   </section>
@@ -79,14 +79,6 @@
             document.title = p.title + ", Gestión Natura";
             heading.textContent = p.title;
             crumb.textContent = p.title;
-
-            window.GN_DB.auth.getSession().then(function (sr) {
-              if (sr.data && sr.data.session) {
-                var editLink = document.getElementById("editLink");
-                editLink.href = "admin/index.html?edit=" + encodeURIComponent(slug);
-                editLink.hidden = false;
-              }
-            });
 
             if (p.external_url) {
               var host = "";

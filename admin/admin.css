@@ -65,8 +65,7 @@
 .admin-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 22px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
 .admin-card h3 { font-size: 1.1rem; margin-bottom: 14px; }
 .admin-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
-.admin-row { display: flex; align-items: flex-start; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow-sm); transition: box-shadow .3s var(--ease), border-color .3s var(--ease); }
-.admin-row.highlight { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(224,174,32,.25); }
+.admin-row { display: flex; align-items: flex-start; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow-sm); }
 .admin-row img.thumb { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; flex: none; border: 1px solid var(--border); background: var(--paper-2); }
 .admin-row .row-fields { flex: 1; display: grid; gap: 8px; }
 .admin-row .row-fields .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
