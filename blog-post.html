@@ -21,7 +21,7 @@
     .post-gallery img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border); }
     .news-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: clamp(24px,4vw,44px); box-shadow: var(--shadow-md); }
     .news-card .cover { margin-bottom: var(--space-5); }
-    .news-card .lead { font-size: 1.22rem; }
+    .news-card .lead { font-size: 1.22rem; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
     .news-source { display: flex; align-items: center; gap: .5rem; font-family: var(--font-mono); font-size: .82rem; color: var(--text-muted); margin: var(--space-5) 0; padding-top: var(--space-5); border-top: 1px solid var(--border); }
     .news-source svg { width: 16px; height: 16px; flex: 0 0 auto; }
   </style>
