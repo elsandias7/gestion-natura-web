@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>El proceso, Cómo se construye un relleno sanitario | Gestión Natura</title>
+  <meta name="description" content="Corte de ingeniería en 3D, etapa por etapa: selección del sitio, excavación, geomembrana HDPE, drenaje de lixiviados, biogás, compactación y clausura. Así diseña Gestión Natura un relleno sanitario tipo A–D.">
+  <meta name="theme-color" content="#0B120C">
+  <link rel="icon" href="assets/img/logo.jpg">
+  <meta property="og:title" content="Cómo se construye un relleno sanitario, Gestión Natura">
+  <meta property="og:description" content="Un corte de ingeniería 3D, etapa por etapa, del proceso real de diseño y construcción de un relleno sanitario.">
+  <meta property="og:type" content="article">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css?v=28">
+  <style>
+    .scrolly { position: relative; }
+    .scrolly-inner { display: grid; grid-template-columns: 1fr; gap: 4px; align-items: start; }
+    .scrolly-fig { position: static; }
+    /* Fallback estático (por defecto; móvil / reduced-motion / sin WebGL) */
+    .fig-static { border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); position: relative; }
+    .fig-static img { width: 100%; height: auto; display: block; filter: saturate(.8) brightness(.9); }
+    .fig-static .cap { position: absolute; left: 14px; bottom: 12px; font-family: var(--font-mono); font-size: .72rem; color: #fff; background: rgba(11,18,12,.72); padding: 5px 10px; border-radius: 20px; }
+    #scene3d { display: none; }
+    .fig3d-badge { display: none; }
+    .step { padding: 22px 0; border-top: 1px solid var(--border); }
+    .step:first-child { border-top: 0; }
+    .step .st-idx { font-family: var(--font-mono); font-size: .82rem; color: var(--moss-600); }
+    .step h2 { font-size: clamp(1.5rem,3vw,2.2rem); margin: 6px 0 10px; }
+    .step p { font-size: 1.06rem; max-width: 48ch; }
+    .step .tech { margin-top: 14px; font-family: var(--font-mono); font-size: .76rem; color: var(--text-muted); border-left: 2px solid var(--border); padding-left: 12px; }
+
+    /* Modo 3D (desktop + WebGL + sin reduced-motion) */
+    body.proc-3d .scrolly-inner { grid-template-columns: 1.02fr .98fr; gap: clamp(32px,5vw,72px); }
+    body.proc-3d .scrolly-fig { position: sticky; top: var(--header-h); height: calc(100svh - var(--header-h)); }
+    body.proc-3d .fig-static { display: none; }
+    body.proc-3d #scene3d { display: block; width: 100%; height: 100%; touch-action: pan-y; cursor: grab; }
+    body.proc-3d #scene3d:active { cursor: grabbing; }
+    body.proc-3d .fig3d-badge { display: inline-flex; position: absolute; top: 16px; left: 16px; z-index: 3;
+      font-family: var(--font-mono); font-size: .74rem; color: var(--lime-400);
+      background: rgba(11,18,12,.6); border: 1px solid var(--ink-700); border-radius: 20px; padding: 5px 12px; }
+    body.proc-3d .fig3d-hint { display: block; position: absolute; right: 16px; bottom: 14px; z-index: 3;
+      font-family: var(--font-mono); font-size: .68rem; color: rgba(255,255,255,.5); }
+    body.proc-3d .step { min-height: 88svh; border-top: 0; display: flex; flex-direction: column; justify-content: center; }
+    body.proc-3d .step:first-child { min-height: 66svh; }
+    body.proc-3d .step.current .st-idx { color: var(--forest-700); }
+    .fig3d-hint { display: none; }
+    /* Vista 3D en móvil: modelo fijo arriba, el texto sube debajo */
+    @media (max-width: 820px) {
+      body.proc-3d .scrolly-inner { grid-template-columns: 1fr; gap: 0; }
+      body.proc-3d .scrolly-fig { position: sticky; top: var(--header-h); height: 52svh; z-index: 2;
+        background: var(--bg); border-bottom: 1px solid var(--border); box-shadow: 0 10px 20px rgba(46,32,21,.06); }
+      body.proc-3d #scene3d { height: 100%; }
+      body.proc-3d .fig3d-hint { display: none; }
+      body.proc-3d .step { min-height: 60svh; justify-content: flex-start; padding-top: 26px; border-top: 0; }
+      body.proc-3d .step:first-child { min-height: 30svh; }
+    }
+  </style>
+</head>
+<body data-page="como-trabajamos.html">
+
+  <section class="pagehero">
+    <div class="pagehero-media"><img src="assets/img/photos/geomembrana.jpg?v=2" alt="Celda de relleno sanitario con geomembrana"></div>
+    <div class="pagehero-overlay"></div>
+    <div class="container">
+      <p class="breadcrumb"><a href="index.html">Inicio</a> / El proceso</p>
+      <h1>Cómo se construye un relleno sanitario</h1>
+      <p class="sub">Un corte de ingeniería en 3D, etapa por etapa. Baja para recorrerlo.</p>
+    </div>
+  </section>
+
+  <section class="section scrolly">
+    <div class="container">
+      <div class="scrolly-inner">
+
+        <div class="scrolly-fig">
+          <span class="fig3d-badge" id="badge">ETAPA 01 / 09</span>
+          <span class="fig3d-hint">arrastra para girar</span>
+          <canvas id="scene3d"></canvas>
+          <div class="fig-static">
+            <img src="assets/img/photos/geomembrana.jpg?v=2" alt="Corte de un relleno sanitario con geomembrana">
+            <span class="cap">Corte real de una celda impermeabilizada</span>
+          </div>
+        </div>
+
+        <div class="scrolly-steps" id="steps">
+          <div class="step current" data-stage="1"><span class="st-idx">Etapa 01 / 09</span><h2>Selección y estudio del sitio</h2><p>El estudio topográfico y geohidrológico define dónde es seguro construir.</p><p class="tech">Topografía · geohidrología · mecánica de suelos</p></div>
+          <div class="step" data-stage="2"><span class="st-idx">Etapa 02 / 09</span><h2>Preparación del terreno</h2><p>Desmonte, despalme y caminos de acceso.</p><p class="tech">Desmonte · despalme · caminos</p></div>
+          <div class="step" data-stage="3"><span class="st-idx">Etapa 03 / 09</span><h2>Excavación de la celda</h2><p>Se abre la celda con los taludes del proyecto ejecutivo.</p><p class="tech">Proyecto ejecutivo · movimiento de tierras</p></div>
+          <div class="step" data-stage="4"><span class="st-idx">Etapa 04 / 09</span><h2>Impermeabilización</h2><p>Arcilla compactada y geomembrana HDPE: la capa que lo cambia todo.</p><p class="tech">Arcilla compactada · geomembrana HDPE</p></div>
+          <div class="step" data-stage="5"><span class="st-idx">Etapa 05 / 09</span><h2>Drenaje de lixiviados</h2><p>Grava y tubería perforada conducen los lixiviados fuera de la celda.</p><p class="tech">Grava de drenaje · tubería perforada</p></div>
+          <div class="step" data-stage="6"><span class="st-idx">Etapa 06 / 09</span><h2>Captación de biogás</h2><p>Pozos verticales de venteo controlan el biogás generado.</p><p class="tech">Pozos de venteo · biogás</p></div>
+          <div class="step" data-stage="7"><span class="st-idx">Etapa 07 / 09</span><h2>Depósito y compactación</h2><p>Los residuos se compactan por capas, con cobertura diaria de tierra.</p><p class="tech">Celdas · compactación · cobertura diaria</p></div>
+          <div class="step" data-stage="8"><span class="st-idx">Etapa 08 / 09</span><h2>Cobertura final</h2><p>Al agotar la capacidad, se sella con barrera, drenaje pluvial y suelo.</p><p class="tech">Sello · drenaje pluvial · suelo vegetal</p></div>
+          <div class="step" data-stage="9"><span class="st-idx">Etapa 09 / 09</span><h2>Clausura y monitoreo</h2><p>Revegetación, venteos y monitoreo posterior a la clausura.</p><p class="tech">Revegetación · monitoreo · mantenimiento</p></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-band">
+        <div class="topo-bg" data-topo="5"></div>
+        <p class="cta-quote">¿Necesitas un relleno sanitario? <span class="q">Lo hacemos llave en mano.</span></p>
+        <p>De la selección del sitio a la clausura, con un solo responsable técnico. Cuéntanos en qué etapa estás.</p>
+        <div class="cta-actions">
+          <a class="btn btn-primary" data-wa href="#">Platícame tu proyecto <span class="arrow" data-ic="whatsapp"></span></a>
+          <a class="btn btn-ghost-light" href="servicios.html#rellenos">Ver el servicio completo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="assets/js/icons.js?v=1"></script>
+  <script src="assets/js/site.js?v=9"></script>
+  <script src="assets/vendor/supabase.min.js"></script>
+  <script src="assets/js/supabase.config.js?v=2"></script>
+  <script src="assets/js/data.js?v=1"></script>
+
+  <script type="importmap">
+  { "imports": { "three": "./assets/vendor/three.module.min.js" } }
+  </script>
+  <script type="module">
+    const canvas = document.getElementById('scene3d');
+    const steps = [...document.querySelectorAll('.scrolly-steps .step')];
+    const badge = document.getElementById('badge');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const smallScreen = matchMedia('(max-width: 820px)').matches;
+    function webglOK(){ try{ const c=document.createElement('canvas'); return !!(window.WebGLRenderingContext && (c.getContext('webgl')||c.getContext('experimental-webgl'))); }catch(e){ return false; } }
+
+    // Fallback estático solo sin WebGL o con reduced-motion (en móvil SÍ se anima)
+    if (reduce || !webglOK()) { /* queda la versión estática por defecto */ }
+    else { init(); }
+
+    async function init(){
+      let THREE;
+      try { THREE = await import('three'); } catch(e){ console.warn('3D no disponible', e); return; }
+      document.body.classList.add('proc-3d');
+
+      const mobile = matchMedia('(max-width: 820px)').matches;
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias:!mobile, alpha:true });
+      renderer.setPixelRatio(Math.min(devicePixelRatio, mobile ? 1.5 : 2));
+      renderer.shadowMap.enabled = !mobile; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 300);
+      scene.add(new THREE.HemisphereLight(0xdfe6ea, 0x2a2016, 0.95));
+      const dir = new THREE.DirectionalLight(0xffffff, 1.15);
+      dir.position.set(-16,24,14); dir.castShadow=!mobile; dir.shadow.mapSize.set(1024,1024);
+      Object.assign(dir.shadow.camera,{left:-22,right:22,top:22,bottom:-22}); scene.add(dir);
+      scene.add(new THREE.AmbientLight(0xffffff,0.15));
+
+      const DEPTH = 9, extrude = { depth:DEPTH, bevelEnabled:false, steps:1 };
+      function make(shape,color,opts={}){
+        const geo = new THREE.ExtrudeGeometry(shape,extrude); geo.translate(0,0,-DEPTH/2);
+        const mat = new THREE.MeshStandardMaterial({ color, roughness:opts.rough??.95, metalness:opts.metal??0, flatShading:!!opts.flat, transparent:true });
+        const m = new THREE.Mesh(geo,mat); m.castShadow=true; m.receiveShadow=true; m.userData.baseOpa=1;
+        const e = new THREE.LineSegments(new THREE.EdgesGeometry(geo,24), new THREE.LineBasicMaterial({ color:0x11160f, transparent:true, opacity:.5 }));
+        e.userData.baseOpa=.5; m.add(e); return m;
+      }
+      function trap(x1t,x2t,x1b,x2b,yt,yb){ const s=new THREE.Shape(); s.moveTo(x1t,yt); s.lineTo(x2t,yt); s.lineTo(x2b,yb); s.lineTo(x1b,yb); s.closePath(); return s; }
+      function mat(color,opts={}){ const m=new THREE.MeshStandardMaterial({color,roughness:opts.rough??.9,metalness:opts.metal??0,flatShading:!!opts.flat,transparent:true}); return m; }
+      function cyl(r,h,color,opts={}){ const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,opts.seg??18),mat(color,opts)); m.castShadow=true; m.userData.baseOpa=1; return m; }
+      function cone(r,h,color){ const m=new THREE.Mesh(new THREE.ConeGeometry(r,h,7),mat(color,{flat:true})); m.castShadow=true; m.userData.baseOpa=1; return m; }
+
+      const root = new THREE.Group(); scene.add(root);
+      const ground = new THREE.Mesh(new THREE.PlaneGeometry(90,90), new THREE.ShadowMaterial({opacity:.26}));
+      ground.rotation.x=-Math.PI/2; ground.position.y=-6.02; ground.receiveShadow=true; scene.add(ground);
+
+      // Subsuelo con muesca de la celda
+      const soil = new THREE.Shape();
+      soil.moveTo(-9,-6); soil.lineTo(9,-6); soil.lineTo(9,0); soil.lineTo(5,0); soil.lineTo(3,-4); soil.lineTo(-3,-4); soil.lineTo(-5,0); soil.lineTo(-9,0); soil.closePath();
+      root.add(make(soil,0x6b4e30,{rough:1}));
+      const bandFlank=(y0,y1,c)=>{ root.add(make(trap(-9,-4.4,-9,-4.4,y0,y1),c,{rough:1})); root.add(make(trap(4.4,9,4.4,9,y0,y1),c,{rough:1})); };
+      bandFlank(-1.5,-1.85,0x84653d); bandFlank(-3.8,-4.15,0x543823);
+
+      // Unidades animadas
+      const veg = new THREE.Group();
+      [[-6.5,.7,-2.5],[-7.4,.7,2],[6.6,.7,-1.5],[7.3,.7,2.6],[-6,.7,3.2]].forEach(p=>{ const c=cone(.28,.7,0x5f7d2e); c.position.set(p[0],p[1],p[2]); veg.add(c); });
+      const plug = new THREE.Group(); { const m=make(trap(-4.9,4.9,-3,3,-0.05,-4),0x6b4e30,{rough:1}); plug.add(m); }
+      const g4 = new THREE.Group(); {
+        g4.add(make(trap(-4.7,4.7,-2.9,2.9,-3.55,-3.95),0x7a5638,{rough:1}));           // arcilla
+        const liner=trap(-5,5,-3,3,0,-4); liner.holes.push(trap(-4.6,4.6,-2.72,2.72,-0.34,-3.7));
+        g4.add(make(liner,0x141518,{rough:.26,metal:.5}));                                // geomembrana
+      }
+      const g5 = new THREE.Group(); {
+        g5.add(make(trap(-2.7,2.7,-2.5,2.5,-3.5,-3.85),0x8f8a7d,{rough:1,flat:true}));    // grava
+        const p=cyl(.42,DEPTH*0.96,0x3f4245,{rough:.55,metal:.35,seg:22}); p.rotation.x=Math.PI/2; p.position.set(0,-3.45,0); g5.add(p);
+      }
+      const g6 = new THREE.Group(); {
+        [-2.2,0,2.2].forEach(x=>{ const w=cyl(.2,5.4,0x2f3236,{rough:.5,metal:.3,seg:12}); w.position.set(x,-1.2,0); g6.add(w);
+          const cap=cyl(.28,.3,0x565a60,{rough:.4,metal:.5,seg:12}); cap.position.set(x,1.6,0); g6.add(cap); });
+      }
+      const g7 = new THREE.Group(); {
+        g7.add(make(trap(-3.0,3.0,-2.4,2.4,-1.95,-3.4),0x66654e,{rough:1,flat:true}));
+        g7.add(make(trap(-4.35,4.35,-3.0,3.0,-0.5,-2.0),0x6f6d54,{rough:1,flat:true}));
+      }
+      const g8 = new THREE.Group(); {
+        const cap=new THREE.Shape(); cap.moveTo(-5.2,0); cap.quadraticCurveTo(0,1.5,5.2,0); cap.lineTo(5.2,-0.7); cap.quadraticCurveTo(0,0.7,-5.2,-0.7); cap.closePath();
+        g8.add(make(cap,0x7a5638,{rough:.95}));
+        const top=new THREE.Shape(); top.moveTo(-5.2,0.35); top.quadraticCurveTo(0,1.85,5.2,0.35); top.lineTo(5.2,0.02); top.quadraticCurveTo(0,1.5,-5.2,0.02); top.closePath();
+        g8.add(make(top,0x4d6b34,{rough:.92}));
+      }
+      const g9 = new THREE.Group(); {
+        [[-3,1.3,-2.4],[-1,1.55,1.6],[1.4,1.55,-1.2],[3,1.3,2.2],[.2,1.6,-3.2],[-2.2,1.45,3]].forEach(p=>{ const c=cone(.3,.72,0x5f7d2e); c.position.set(p[0],p[1],p[2]); g9.add(c); });
+        [-2.2,0,2.2].forEach(x=>{ const v=cyl(.14,.7,0x3f4245,{rough:.5,metal:.45,seg:10}); v.position.set(x,2.1,0); g9.add(v); });
+        const mon=cyl(.16,1.1,0xC6F24E,{rough:.4,metal:.2,seg:10}); mon.position.set(4.4,-0.2,3); g9.add(mon); // pozo de monitoreo
+      }
+      [veg,plug,g4,g5,g6,g7,g8,g9].forEach(g=>{ g.visible=false; root.add(g); });
+
+      const box=new THREE.Box3().setFromObject(root); root.position.sub(box.getCenter(new THREE.Vector3()));
+
+      let stage=1;
+      const units=[
+        {g:veg,  on:()=>stage===1},
+        {g:plug, on:()=>stage<=2},
+        {g:g4,   on:()=>stage>=4},
+        {g:g5,   on:()=>stage>=5},
+        {g:g6,   on:()=>stage>=6},
+        {g:g7,   on:()=>stage>=7},
+        {g:g8,   on:()=>stage>=8},
+        {g:g9,   on:()=>stage>=9},
+      ];
+      units.forEach(u=>u.a=u.on()?1:0);
+      function setAppear(g,a){
+        g.visible=a>0.006;
+        g.traverse(o=>{ if(o.material){ o.material.opacity=(o.userData.baseOpa??1)*Math.min(1,a); o.material.transparent=a<0.996; o.material.depthWrite=a>=0.5; } });
+      }
+
+      // Cámara por etapa
+      const CAM={
+        1:{yaw:-0.6,pitch:0.46,dist:36,ty:-0.1},  2:{yaw:-0.52,pitch:0.44,dist:34,ty:-0.2},
+        3:{yaw:-0.72,pitch:0.34,dist:28,ty:-1.1},  4:{yaw:-0.9,pitch:0.30,dist:25,ty:-1.7},
+        5:{yaw:-0.46,pitch:0.28,dist:25,ty:-2.4},  6:{yaw:-0.6,pitch:0.38,dist:29,ty:-1.0},
+        7:{yaw:-0.55,pitch:0.32,dist:27,ty:-0.8},  8:{yaw:-0.7,pitch:0.44,dist:30,ty:0.0},
+        9:{yaw:-0.92,pitch:0.5,dist:35,ty:0.3}
+      };
+      let cur={...CAM[1]}, tgt={...CAM[1]}, userTouched=false;
+      function applyCam(){ camera.position.set(Math.sin(cur.yaw)*Math.cos(cur.pitch)*cur.dist, Math.sin(cur.pitch)*cur.dist, Math.cos(cur.yaw)*Math.cos(cur.pitch)*cur.dist); camera.lookAt(0,cur.ty,0); }
+      function setStage(n){ stage=Math.max(1,Math.min(9,n)); tgt={...CAM[stage]}; userTouched=false; badge.textContent='ETAPA 0'+stage+' / 09'; steps.forEach(s=>s.classList.toggle('current',+s.dataset.stage===stage)); }
+
+      // Scroll → etapa (IntersectionObserver, sin scroll-jacking)
+      const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) setStage(+e.target.dataset.stage); }), { rootMargin: mobile ? '-52% 0px -30% 0px' : '-45% 0px -45% 0px', threshold:0 });
+      steps.forEach(s=>io.observe(s));
+
+      // Arrastre / zoom
+      let dragging=false,px=0,py=0;
+      canvas.addEventListener('pointerdown',e=>{ if(e.pointerType==='touch') return; dragging=true; userTouched=true; px=e.clientX; py=e.clientY; canvas.setPointerCapture(e.pointerId); });
+      canvas.addEventListener('pointermove',e=>{ if(!dragging)return; cur.yaw-=(e.clientX-px)*0.006; cur.pitch=Math.max(-0.1,Math.min(0.95,cur.pitch+(e.clientY-py)*0.006)); px=e.clientX; py=e.clientY; });
+      addEventListener('pointerup',()=>dragging=false);
+      // Sin zoom por rueda: la rueda debe hacer scroll normal de la página (evita que se sienta trabado).
+
+      function resize(){ const w=canvas.clientWidth||1, h=canvas.clientHeight||1; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
+      const ro=new ResizeObserver(resize); ro.observe(canvas); resize();
+
+      const s0 = Math.max(1, Math.min(9, parseInt(new URLSearchParams(location.search).get('stage'),10) || 1));
+      setStage(s0);
+      units.forEach(u=> u.a = u.on()?1:0);   // snap inicial (deep-link a una etapa)
+      cur = {...CAM[s0]};
+      (function frame(){
+        units.forEach(u=>{ const t=u.on()?1:0; u.a+=(t-u.a)*0.12; setAppear(u.g,u.a); });
+        if(!userTouched){ for(const k of ['yaw','pitch','dist','ty']) cur[k]+=(tgt[k]-cur[k])*0.06; }
+        applyCam(); renderer.render(scene,camera); requestAnimationFrame(frame);
+      })();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+# Cabeceras de Cloudflare Pages — equivalente a netlify.toml
+# (Netlify pausó las publicaciones por límite de créditos del plan gratuito;
+# nos movemos a Cloudflare Pages, que no tiene ese sistema de créditos.)
+#
+# OJO: a diferencia de Netlify, Cloudflare Pages COMBINA las reglas que
+# coinciden con una misma ruta en vez de que la más específica gane. Por eso
+# aquí cada carpeta/archivo con caché "immutable" está separado del archivo
+# de configuración de Supabase, que necesita quedar SIEMPRE sin caché.
+
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+/assets/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/img/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/vendor/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/js/icons.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/js/site.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/js/data.js
+  Cache-Control: public, max-age=31536000, immutable
+
+# Este archivo cambia (llaves de Supabase, y a futuro si se rotan) y debe
+# revisarse siempre, nunca quedarse cacheado como los demás archivos de /assets/.
+/assets/js/supabase.config.js
+  Cache-Control: no-cache, must-revalidate
+
+# Las páginas HTML cambian seguido (contenido, textos, fotos nuevas) y por
+# defecto el navegador las cachea "a su criterio" (caché heurístico) porque
+# no llevaban ninguna cabecera de caché propia. Eso hacía que, después de
+# subir un deploy nuevo, siguiera viéndose la página vieja hasta forzar una
+# recarga. Aquí se marcan todas como "revisa siempre antes de usar la copia
+# guardada" (no significa "no cachear", solo "no uses la copia sin preguntar").
+/
+  Cache-Control: no-cache, must-revalidate
+/index.html
+  Cache-Control: no-cache, must-revalidate
+/nosotros.html
+  Cache-Control: no-cache, must-revalidate
+/servicios.html
+  Cache-Control: no-cache, must-revalidate
+/proyectos.html
+  Cache-Control: no-cache, must-revalidate
+/como-trabajamos.html
+  Cache-Control: no-cache, must-revalidate
+/blog.html
+  Cache-Control: no-cache, must-revalidate
+/blog-post.html
+  Cache-Control: no-cache, must-revalidate
+/contacto.html
+  Cache-Control: no-cache, must-revalidate
+/admin/
+  Cache-Control: no-cache, must-revalidate
+/admin/index.html
+  Cache-Control: no-cache, must-revalidate

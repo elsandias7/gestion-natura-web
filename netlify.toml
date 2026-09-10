@@ -1,0 +1,23 @@
+# Configuración de despliegue en Netlify — Gestión Natura
+[build]
+  publish = "."
+
+# Cabeceras de seguridad y caché básicas
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Este archivo cambia (llaves de Supabase, y a futuro si se rotan) y debe
+# revisarse siempre, nunca quedarse cacheado como el resto de /assets/*.
+[[headers]]
+  for = "/assets/js/supabase.config.js"
+  [headers.values]
+    Cache-Control = "no-cache, must-revalidate"

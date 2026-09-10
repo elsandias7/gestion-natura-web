@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacto, Gestión Natura | Consultoría ambiental en Xalapa, Veracruz</title>
+  <meta name="description" content="Contacta a Gestión Natura en Xalapa, Veracruz. Teléfono y WhatsApp 228 102 3848, correo gestionnaturaver@gmail.com. Platícanos tu proyecto ambiental.">
+  <meta name="theme-color" content="#0B120C">
+  <link rel="icon" href="assets/img/logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css?v=28">
+</head>
+<body data-page="contacto.html">
+
+  <section class="pagehero">
+    <div class="pagehero-media"><img src="assets/img/photos/hero-relleno.jpg?v=2" alt="Obra de relleno sanitario"></div>
+    <div class="pagehero-overlay"></div>
+    <div class="container">
+      <p class="breadcrumb"><a href="index.html">Inicio</a> / Contacto</p>
+      <h1>Platícanos tu proyecto</h1>
+      <p class="sub">Estamos seguros de que podemos ayudarte. Escríbenos por el medio que prefieras y te respondemos a la brevedad.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="form-card reveal">
+          <h2 style="font-size:1.8rem">Cuéntanos qué necesitas</h2>
+          <p style="margin:8px 0 24px">Completa el formulario y te contactamos. Los campos con * son obligatorios.</p>
+          <form id="contactForm" novalidate>
+            <div class="field">
+              <label for="nombre">Nombre *</label>
+              <input type="text" id="nombre" name="nombre" required autocomplete="name" placeholder="Tu nombre completo">
+            </div>
+            <div class="field">
+              <label for="empresa">Empresa o institución <span class="opt">(opcional)</span></label>
+              <input type="text" id="empresa" name="empresa" autocomplete="organization" placeholder="Nombre de tu empresa o dependencia">
+            </div>
+            <div class="field row">
+              <div class="field">
+                <label for="telefono">Teléfono *</label>
+                <input type="tel" id="telefono" name="telefono" required autocomplete="tel" placeholder="10 dígitos">
+              </div>
+              <div class="field">
+                <label for="correo">Correo *</label>
+                <input type="email" id="correo" name="correo" required autocomplete="email" placeholder="tucorreo@ejemplo.com">
+              </div>
+            </div>
+            <div class="field">
+              <label for="servicio">Servicio de interés</label>
+              <select id="servicio" name="servicio">
+                <option value="">Selecciona una opción</option>
+                <option>Impacto y riesgo ambiental</option>
+                <option>Topografía, suelos e hidrología</option>
+                <option>Rellenos sanitarios y basureros</option>
+                <option>Manejo de residuos y permisos</option>
+                <option>Otro / No estoy seguro</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="mensaje">Mensaje *</label>
+              <textarea id="mensaje" name="mensaje" required placeholder="Describe brevemente tu proyecto o necesidad"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Enviar mensaje <span class="arrow" data-ic="arrow"></span></button>
+            <p class="form-note">Al enviar, te ofreceremos continuar la conversación por WhatsApp para una respuesta más rápida.</p>
+            <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <aside class="info-card reveal">
+          <div class="topo-bg" data-topo="6"></div>
+          <h3>Datos de contacto</h3>
+          <ul class="info-list">
+            <li><span class="info-ic" data-ic="pin"></span><div><b>Dirección</b><span>Oriente 3 No. 28, Col. Ferrocarrilera, Xalapa, Veracruz, México, CP 91120</span></div></li>
+            <li><span class="info-ic" data-ic="phone"></span><div><b>Teléfono / WhatsApp</b><a data-tel href="#">228 102 3848</a></div></li>
+            <li><span class="info-ic" data-ic="mail"></span><div><b>Correo</b><a data-mail href="#">gestionnaturaver@gmail.com</a></div></li>
+            <li><span class="info-ic" data-ic="facebook"></span><div><b>Facebook</b><a href="https://www.facebook.com/GestionNatura" target="_blank" rel="noopener">@GestionNatura</a></div></li>
+          </ul>
+          <a class="btn btn-whatsapp" data-wa href="#" style="width:100%;justify-content:center">Escribir por WhatsApp <span data-ic="whatsapp" style="width:22px;height:22px"></span></a>
+          <div class="map-embed">
+            <iframe title="Ubicación de Gestión Natura en Xalapa" src="https://www.google.com/maps?q=Col.%20Ferrocarrilera,%20Xalapa,%20Veracruz%2091120&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <script src="assets/js/icons.js?v=1"></script>
+  <script src="assets/js/site.js?v=9"></script>
+  <script src="assets/vendor/supabase.min.js"></script>
+  <script src="assets/js/supabase.config.js?v=2"></script>
+  <script src="assets/js/data.js?v=1"></script>
+</body>
+</html>

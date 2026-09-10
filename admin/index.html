@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel, Gestión Natura</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../assets/img/logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css?v=28">
+  <link rel="stylesheet" href="admin.css?v=4">
+</head>
+<body class="admin-body">
+
+  <!-- ---------- Estado: Supabase no configurado ---------- -->
+  <div id="notConfigured" class="admin-gate" hidden>
+    <div class="admin-gate-card">
+      <img src="../assets/img/logo.jpg" alt="Gestión Natura" width="48" height="48" style="border-radius:10px">
+      <h1>El panel aún no está conectado</h1>
+      <p>Falta pegar la URL y la llave de Supabase en <code>assets/js/supabase.config.js</code>. Sigue la guía en <code>supabase/SETUP.md</code> y vuelve a subir ese archivo una sola vez.</p>
+    </div>
+  </div>
+
+  <!-- ---------- Pantalla de inicio de sesión ---------- -->
+  <div id="loginScreen" class="admin-gate" hidden>
+    <form id="loginForm" class="admin-gate-card">
+      <img src="../assets/img/logo.jpg" alt="Gestión Natura" width="48" height="48" style="border-radius:10px">
+      <h1>Panel de Gestión Natura</h1>
+      <p>Inicia sesión con el correo que te dio tu administrador.</p>
+      <div class="field"><label for="loginEmail">Correo</label><input type="email" id="loginEmail" required autocomplete="username"></div>
+      <div class="field"><label for="loginPass">Contraseña</label><input type="password" id="loginPass" required autocomplete="current-password"></div>
+      <button class="btn btn-forest" type="submit" style="width:100%;justify-content:center">Entrar</button>
+      <p class="admin-error" id="loginError" hidden></p>
+    </form>
+  </div>
+
+  <!-- ---------- Dashboard ---------- -->
+  <div id="dashboard" class="admin-shell" hidden>
+
+    <aside class="admin-side">
+      <div class="admin-side-brand">
+        <img src="../assets/img/logo.jpg" alt="">
+        <div><b>Gestión Natura</b><span>Panel</span></div>
+      </div>
+      <nav class="admin-side-nav">
+        <button class="admin-tab active" data-tab="banners"><span data-ic="image"></span>Banners</button>
+        <button class="admin-tab" data-tab="servicios"><span data-ic="layers"></span>Servicios</button>
+        <button class="admin-tab" data-tab="fotos"><span data-ic="grid"></span>Fotos</button>
+        <button class="admin-tab" data-tab="blog"><span data-ic="newspaper"></span>Blog</button>
+      </nav>
+      <div class="admin-side-foot">
+        <a href="../index.html" target="_blank" class="admin-tab"><span data-ic="arrowUR"></span>Ver sitio</a>
+        <button class="admin-tab" id="logoutBtn"><span data-ic="logout"></span>Cerrar sesión</button>
+        <span id="userEmail"></span>
+      </div>
+    </aside>
+
+    <div class="admin-content">
+      <main class="admin-main">
+
+        <!-- ===== BANNERS ===== -->
+        <section class="admin-panel active" id="panel-banners">
+          <h2>Banners de cada página</h2>
+          <p class="admin-hint">La foto y los textos que aparecen arriba de cada página. Cambia lo que quieras y da clic en Guardar.</p>
+          <div id="bannersList" class="admin-list"></div>
+        </section>
+
+        <!-- ===== SERVICIOS ===== -->
+        <section class="admin-panel" id="panel-servicios">
+          <h2>Catálogo de servicios</h2>
+          <p class="admin-hint">Organizados en las cuatro áreas del sitio. Agrega, edita, pon precio o quita los que necesites.</p>
+          <div class="admin-subtabs" id="svcSubtabs">
+            <button class="admin-subtab active" data-cat="impacto">Impacto ambiental</button>
+            <button class="admin-subtab" data-cat="topografia">Topografía</button>
+            <button class="admin-subtab" data-cat="rellenos">Rellenos sanitarios</button>
+            <button class="admin-subtab" data-cat="residuos">Manejo de residuos</button>
+          </div>
+          <div id="servicesList" class="admin-list"></div>
+          <div class="admin-card admin-new">
+            <h3>Agregar servicio</h3>
+            <form id="serviceForm" class="admin-form">
+              <div class="field"><label>Ícono</label>
+                <select id="svcIcon">
+                  <option value="leaf">Hoja</option><option value="layers">Capas</option><option value="recycle">Reciclaje</option>
+                  <option value="file">Documento</option><option value="shield">Escudo</option><option value="compass">Brújula</option>
+                  <option value="users">Personas</option><option value="building">Edificio</option><option value="droplet">Gota</option>
+                  <option value="award">Reconocimiento</option>
+                </select>
+              </div>
+              <div class="field"><label>Título</label><input type="text" id="svcTitle" required></div>
+              <div class="field"><label>Descripción</label><textarea id="svcDesc" rows="2"></textarea></div>
+              <div class="field row">
+                <div class="field"><label>Precio <span class="opt">(opcional, ej. "Desde $8,000" o "Cotización")</span></label><input type="text" id="svcPrice"></div>
+                <div class="field"><label>Orden (menor aparece primero)</label><input type="number" id="svcOrder" value="1"></div>
+              </div>
+              <div class="field"><label>Fotos <span class="opt">(opcional, puedes elegir varias)</span></label><input type="file" id="svcImages" accept="image/*" multiple></div>
+              <button class="btn btn-forest" type="submit">Agregar a esta categoría</button>
+            </form>
+          </div>
+        </section>
+
+        <!-- ===== FOTOS ===== -->
+        <section class="admin-panel" id="panel-fotos">
+          <h2>Fotos de proyectos</h2>
+          <p class="admin-hint">Estas fotos aparecen en la galería de la página Proyectos. Puedes seleccionar varias a la vez.</p>
+          <div id="galleryList" class="admin-grid-list"></div>
+          <div class="admin-card admin-new">
+            <h3>Agregar fotos</h3>
+            <form id="photoForm" class="admin-form">
+              <div class="field"><label>Archivos de imagen <span class="opt">(puedes elegir varios)</span></label><input type="file" id="photoFile" accept="image/*" multiple required></div>
+              <div class="field"><label>Etiqueta (ej. "Obra", "Estudios base")</label><input type="text" id="photoTag"></div>
+              <div class="field"><label>Título <span class="opt">(si subes varias, se usa para todas)</span></label><input type="text" id="photoTitle"></div>
+              <div class="field"><label>Descripción</label><textarea id="photoDesc" rows="2"></textarea></div>
+              <button class="btn btn-forest" type="submit">Subir fotos</button>
+            </form>
+            <p class="admin-error" id="photoError" hidden></p>
+          </div>
+        </section>
+
+        <!-- ===== BLOG ===== -->
+        <section class="admin-panel" id="panel-blog">
+          <h2>Blog</h2>
+          <p class="admin-hint">Escribe un artículo propio, o comparte el enlace de una noticia externa. Solo lo "Publicado" se ve en el sitio.</p>
+          <div id="blogList" class="admin-list"></div>
+          <div class="admin-card admin-new">
+            <h3>Nueva entrada</h3>
+            <div class="admin-subtabs">
+              <button type="button" class="admin-subtab active" data-posttype="articulo"><span data-ic="file"></span> Artículo propio</button>
+              <button type="button" class="admin-subtab" data-posttype="enlace"><span data-ic="link"></span> Enlace a noticia</button>
+            </div>
+            <form id="blogForm" class="admin-form">
+              <div class="field"><label>Título</label><input type="text" id="postTitle" required></div>
+              <div class="field"><label>Categoría (ej. "Rellenos sanitarios")</label><input type="text" id="postCategory"></div>
+              <div class="field"><label>Resumen corto (aparece en la lista)</label><textarea id="postExcerpt" rows="2"></textarea></div>
+              <div class="field" id="fieldContent"><label>Contenido completo</label><textarea id="postContent" rows="6"></textarea></div>
+              <div class="field" id="fieldLink" hidden><label>Enlace a la noticia (https://...)</label><input type="url" id="postLink" placeholder="https://"></div>
+              <div class="field"><label>Foto de portada <span class="opt">(opcional)</span></label><input type="file" id="postCover" accept="image/*"></div>
+              <div class="field"><label>Fotos adicionales <span class="opt">(opcional, puedes elegir varias)</span></label><input type="file" id="postImages" accept="image/*" multiple></div>
+              <div class="field"><label><input type="checkbox" id="postPublished" style="width:auto;margin-right:8px">Publicar de inmediato</label></div>
+              <button class="btn btn-forest" type="submit">Guardar</button>
+            </form>
+            <p class="admin-error" id="blogError" hidden></p>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../assets/js/icons.js?v=1"></script>
+  <script src="../assets/vendor/supabase.min.js"></script>
+  <script src="../assets/js/supabase.config.js?v=2"></script>
+  <script src="admin.js?v=6"></script>
+</body>
+</html>
