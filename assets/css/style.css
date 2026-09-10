@@ -397,6 +397,9 @@ body:not(.js-anim) .cell-layer, body:not(.js-anim) .cell-leader, body:not(.js-an
 .svc-photos-more { display: grid; place-items: center; width: 48px; height: 48px; background: var(--paper-2); color: var(--text-muted); font-family: var(--font-mono); font-size: .74rem; font-weight: 600; }
 /* Protección: si alguien pega un resumen larguísimo por error, la tarjeta no se desborda */
 [data-blog-list] .svc p { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.blog-thumb { display: block; margin: calc(var(--space-6) * -1) calc(var(--space-6) * -1) var(--space-4); border-radius: var(--radius) var(--radius) 0 0; overflow: hidden; aspect-ratio: 16/9; }
+.blog-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s var(--ease); }
+.svc:hover .blog-thumb img { transform: scale(1.04); }
 .svc-link { display: inline-flex; align-items: center; gap: .4rem; margin-top: auto; padding-top: var(--space-4); color: var(--moss-600); font-weight: 600; font-size: .92rem; }
 .svc-link svg { width: 16px; height: 16px; }
 /* Protagonista: rellenos sanitarios */

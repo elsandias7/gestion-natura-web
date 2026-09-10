@@ -124,6 +124,7 @@
           var href = isLink ? post.external_url : ("blog-post.html?slug=" + encodeURIComponent(post.slug));
           var target = isLink ? ' target="_blank" rel="noopener"' : "";
           return '<article class="svc">' +
+            (post.cover_image_url ? '<a class="blog-thumb" href="' + href + '"' + target + '><img src="' + post.cover_image_url + '" alt="" loading="lazy"></a>' : "") +
             (post.category ? '<span class="tile-tag">' + escapeHtml(post.category) + "</span>" : "") +
             (isLink ? ' <span class="tile-tag" style="color:var(--gold-600)">Enlace externo</span>' : "") +
             '<h3 style="margin-top:14px"><a href="' + href + '"' + target + ">" + escapeHtml(post.title) + "</a></h3>" +
