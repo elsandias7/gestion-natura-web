@@ -121,7 +121,7 @@
         if (res.error || !res.data || !res.data.length) return; // sin posts publicados: deja los de ejemplo
         el.innerHTML = res.data.map(function (post) {
           var isLink = !!post.external_url;
-          var href = "blog-post.html?slug=" + encodeURIComponent(post.slug);
+          var href = "blog-post?slug=" + encodeURIComponent(post.slug);
           return '<article class="svc">' +
             (post.cover_image_url ? '<a class="blog-thumb" href="' + href + '"><img src="' + post.cover_image_url + '" alt="" loading="lazy"></a>' : "") +
             (post.category ? '<span class="tile-tag">' + escapeHtml(post.category) + "</span>" : "") +

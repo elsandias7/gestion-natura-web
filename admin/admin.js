@@ -155,9 +155,9 @@
       '<img class="thumb" src="' + adminImgSrc(p.hero_image_url) + '" alt="">' +
       '<div class="row-fields">' +
       '<b>' + (PAGE_LABELS[p.slug] || p.slug) + "</b>" +
-      '<input type="text" class="f-eyebrow" placeholder="Texto pequeño arriba del título" value="' + escapeHtml(p.eyebrow || "") + '">' +
-      '<input type="text" class="f-title" placeholder="Título grande" value="' + escapeHtml(p.title || "") + '">' +
-      '<textarea class="f-sub" rows="2" placeholder="Texto debajo del título">' + escapeHtml(p.subtitle || "") + "</textarea>" +
+      '<input type="text" class="f-eyebrow" aria-label="Texto pequeño arriba del título" placeholder="Texto pequeño arriba del título" value="' + escapeHtml(p.eyebrow || "") + '">' +
+      '<input type="text" class="f-title" aria-label="Título grande" placeholder="Título grande" value="' + escapeHtml(p.title || "") + '">' +
+      '<textarea class="f-sub" rows="2" aria-label="Texto debajo del título" placeholder="Texto debajo del título">' + escapeHtml(p.subtitle || "") + "</textarea>" +
       '<label class="row-imgcount">Foto principal<input type="file" class="f-file" accept="image/*"></label>' +
       '<label class="row-imgcount">Fotos adicionales (' + extra + ')<input type="file" class="f-extra" accept="image/*" multiple></label>' +
       "</div>" +
@@ -214,11 +214,11 @@
     return '<div class="admin-row" data-id="' + s.id + '">' +
       '<div class="svc-ic" data-ic="' + s.icon + '" style="flex:none"></div>' +
       '<div class="row-fields">' +
-      '<input type="text" class="f-title" value="' + escapeHtml(s.title) + '">' +
-      '<textarea class="f-desc" rows="2">' + escapeHtml(s.description || "") + "</textarea>" +
+      '<input type="text" class="f-title" aria-label="Título del servicio" value="' + escapeHtml(s.title) + '">' +
+      '<textarea class="f-desc" rows="2" aria-label="Descripción del servicio">' + escapeHtml(s.description || "") + "</textarea>" +
       '<div class="two">' +
-      '<input type="text" class="f-price" placeholder="Precio (opcional)" value="' + escapeHtml(s.price || "") + '">' +
-      '<input type="number" class="f-order" value="' + (s.sort_order || 0) + '" title="Orden">' +
+      '<input type="text" class="f-price" aria-label="Precio" placeholder="Precio (opcional)" value="' + escapeHtml(s.price || "") + '">' +
+      '<input type="number" class="f-order" aria-label="Orden" value="' + (s.sort_order || 0) + '" title="Orden">' +
       "</div>" +
       '<label class="row-imgcount">Agregar fotos (' + extra + ')<input type="file" class="f-images" accept="image/*" multiple></label>' +
       "</div>" +
@@ -328,9 +328,13 @@
     return '<div class="admin-photo-card" data-id="' + p.id + '" draggable="true">' +
       '<img src="' + adminImgSrc(p.image_url) + '" alt="">' +
       '<div class="pc-body">' +
-      '<input type="text" class="f-tag" placeholder="Etiqueta" value="' + escapeHtml(p.tag || "") + '">' +
-      '<input type="text" class="f-title" placeholder="Título" value="' + escapeHtml(p.title || "") + '">' +
-      '<textarea class="f-desc" rows="2" placeholder="Descripción">' + escapeHtml(p.description || "") + "</textarea>" +
+      '<input type="text" class="f-tag" aria-label="Etiqueta" placeholder="Etiqueta" value="' + escapeHtml(p.tag || "") + '">' +
+      '<input type="text" class="f-title" aria-label="Título de la foto" placeholder="Título" value="' + escapeHtml(p.title || "") + '">' +
+      '<textarea class="f-desc" rows="2" aria-label="Descripción de la foto" placeholder="Descripción">' + escapeHtml(p.description || "") + "</textarea>" +
+      '<div class="pc-actions">' +
+        '<button type="button" class="btn btn-outline btn-move-up" aria-label="Mover foto hacia arriba">↑</button>' +
+        '<button type="button" class="btn btn-outline btn-move-down" aria-label="Mover foto hacia abajo">↓</button>' +
+      "</div>" +
       '<div class="pc-actions"><button class="btn btn-forest btn-save">Guardar</button><button class="btn btn-outline btn-del">Eliminar</button></div>' +
       "</div></div>";
   }
@@ -347,6 +351,14 @@
     card.querySelector(".btn-del").addEventListener("click", function () {
       if (!confirm("¿Eliminar esta foto?")) return;
       db.from("gallery_photos").delete().eq("id", p.id).then(function (res) { if (!res.error) card.remove(); });
+    });
+    card.querySelector(".btn-move-up").addEventListener("click", function () {
+      var prev = card.previousElementSibling;
+      if (prev) { card.parentNode.insertBefore(card, prev); persistGalleryOrder(card.parentNode); }
+    });
+    card.querySelector(".btn-move-down").addEventListener("click", function () {
+      var next = card.nextElementSibling;
+      if (next) { card.parentNode.insertBefore(next, card); persistGalleryOrder(card.parentNode); }
     });
   }
   function onAddPhoto(e) {
@@ -397,17 +409,17 @@
       '<div class="row-fields">' +
       '<span class="admin-badge' + (p.published ? " on" : "") + '">' + (p.published ? "Publicado" : "Borrador") + "</span> " +
       (p.external_url ? '<span class="admin-badge link">Enlace externo</span>' : "") +
-      '<input type="text" class="f-title" value="' + escapeHtml(p.title) + '">' +
+      '<input type="text" class="f-title" aria-label="Título del artículo" value="' + escapeHtml(p.title) + '">' +
       '<div class="two">' +
-      '<input type="text" class="f-category" placeholder="Categoría" value="' + escapeHtml(p.category || "") + '">' +
-      '<input type="url" class="f-link" placeholder="Enlace externo (opcional)" value="' + escapeHtml(p.external_url || "") + '">' +
+      '<input type="text" class="f-category" aria-label="Categoría" placeholder="Categoría" value="' + escapeHtml(p.category || "") + '">' +
+      '<input type="url" class="f-link" aria-label="Enlace externo" placeholder="Enlace externo (opcional)" value="' + escapeHtml(p.external_url || "") + '">' +
       "</div>" +
-      '<textarea class="f-excerpt" rows="2" placeholder="Resumen">' + escapeHtml(p.excerpt || "") + "</textarea>" +
-      (p.external_url ? "" : '<textarea class="f-content" rows="4" placeholder="Contenido">' + escapeHtml(p.content || "") + "</textarea>") +
+      '<textarea class="f-excerpt" rows="2" aria-label="Resumen" placeholder="Resumen">' + escapeHtml(p.excerpt || "") + "</textarea>" +
+      (p.external_url ? "" : '<textarea class="f-content" rows="4" aria-label="Contenido" placeholder="Contenido">' + escapeHtml(p.content || "") + "</textarea>") +
       '<span class="row-imgcount">' + imgCount + "</span>" +
       '<label style="display:flex;align-items:center;gap:8px;font-size:.88rem"><input type="checkbox" class="f-pub" style="width:auto"' + (p.published ? " checked" : "") + '> Publicado</label>' +
       "</div>" +
-      '<div class="row-actions"><button class="btn btn-forest btn-save">Guardar</button><a class="btn btn-outline btn-preview" href="../blog-post.html?slug=' + encodeURIComponent(p.slug || "") + '" target="_blank" rel="noopener">Vista previa</a><button class="btn btn-outline btn-del">Eliminar</button></div>' +
+      '<div class="row-actions"><button class="btn btn-forest btn-save">Guardar</button><a class="btn btn-outline btn-preview" href="../blog-post?slug=' + encodeURIComponent(p.slug || "") + '" target="_blank" rel="noopener">Vista previa</a><button class="btn btn-outline btn-del">Eliminar</button></div>' +
       "</div>";
   }
   function bindPostRow(p) {

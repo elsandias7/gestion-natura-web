@@ -10,7 +10,7 @@
   <meta property="og:title" content="Cómo se construye un relleno sanitario, Gestión Natura">
   <meta property="og:description" content="Un corte de ingeniería 3D, etapa por etapa, del proceso real de diseño y construcción de un relleno sanitario.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://gestionnatura.pages.dev/como-trabajamos.html">
+  <meta property="og:url" content="https://gestionnatura.pages.dev/como-trabajamos">
   <meta property="og:image" content="https://gestionnatura.pages.dev/assets/img/photos/geomembrana.jpg">
   <meta property="og:site_name" content="Gestión Natura">
   <meta property="og:locale" content="es_MX">
@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=31">
+  <link rel="stylesheet" href="assets/css/style.css?v=32">
   <style>
     .scrolly { position: relative; }
     .scrolly-inner { display: grid; grid-template-columns: 1fr; gap: 4px; align-items: start; }
@@ -63,13 +63,13 @@
     }
   </style>
 </head>
-<body data-page="como-trabajamos.html">
+<body data-page="como-trabajamos">
 
   <section class="pagehero">
     <div class="pagehero-media"><img src="assets/img/photos/geomembrana.jpg?v=2" alt="Celda de relleno sanitario con geomembrana"></div>
     <div class="pagehero-overlay"></div>
     <div class="container">
-      <p class="breadcrumb"><a href="index.html">Inicio</a> / El proceso</p>
+      <p class="breadcrumb"><a href="/">Inicio</a> / El proceso</p>
       <h1>Cómo se construye un relleno sanitario</h1>
       <p class="sub">Un corte de ingeniería en 3D, etapa por etapa. Baja para recorrerlo.</p>
     </div>
@@ -113,17 +113,17 @@
         <p>De la selección del sitio a la clausura, con un solo responsable técnico. Cuéntanos en qué etapa estás.</p>
         <div class="cta-actions">
           <a class="btn btn-primary" data-wa href="#">Platícame tu proyecto <span class="arrow" data-ic="whatsapp"></span></a>
-          <a class="btn btn-ghost-light" href="servicios.html#rellenos">Ver el servicio completo</a>
+          <a class="btn btn-ghost-light" href="servicios#rellenos">Ver el servicio completo</a>
         </div>
       </div>
     </div>
   </section>
 
   <script src="assets/js/icons.js?v=1"></script>
-  <script src="assets/js/site.js?v=9"></script>
+  <script src="assets/js/site.js?v=10"></script>
   <script src="assets/vendor/supabase.min.js"></script>
   <script src="assets/js/supabase.config.js?v=2"></script>
-  <script src="assets/js/data.js?v=3"></script>
+  <script src="assets/js/data.js?v=4"></script>
 
   <script type="importmap">
   { "imports": { "three": "./assets/vendor/three.module.min.js" } }
@@ -265,10 +265,18 @@
       setStage(s0);
       units.forEach(u=> u.a = u.on()?1:0);   // snap inicial (deep-link a una etapa)
       cur = {...CAM[s0]};
+
+      // Pausa el render cuando el canvas sale de la pantalla (evita gastar GPU/batería de más)
+      let canvasVisible = true;
+      new IntersectionObserver(es => { canvasVisible = es[0].isIntersecting; }, { threshold: 0 }).observe(canvas);
+
       (function frame(){
-        units.forEach(u=>{ const t=u.on()?1:0; u.a+=(t-u.a)*0.12; setAppear(u.g,u.a); });
-        if(!userTouched){ for(const k of ['yaw','pitch','dist','ty']) cur[k]+=(tgt[k]-cur[k])*0.06; }
-        applyCam(); renderer.render(scene,camera); requestAnimationFrame(frame);
+        if (canvasVisible) {
+          units.forEach(u=>{ const t=u.on()?1:0; u.a+=(t-u.a)*0.12; setAppear(u.g,u.a); });
+          if(!userTouched){ for(const k of ['yaw','pitch','dist','ty']) cur[k]+=(tgt[k]-cur[k])*0.06; }
+          applyCam(); renderer.render(scene,camera);
+        }
+        requestAnimationFrame(frame);
       })();
     }
   </script>

@@ -70,7 +70,7 @@
 .admin-row .row-fields { flex: 1; display: grid; gap: 8px; }
 .admin-row .row-fields .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .admin-row .row-actions { display: flex; flex-direction: column; gap: 8px; flex: none; }
-.admin-row .row-actions button, .admin-row .row-actions a { font-size: .82rem; padding: .5rem .85rem; text-align: center; text-decoration: none; }
+.admin-row .row-actions button, .admin-row .row-actions a { font-size: .82rem; padding: .95rem .85rem; text-align: center; text-decoration: none; min-height: 44px; display: flex; align-items: center; justify-content: center; }
 .admin-row input, .admin-row textarea, .admin-row select { width: 100%; padding: .55rem .7rem; border: 1.5px solid var(--border); border-radius: 8px; background: var(--paper); font: inherit; font-size: .9rem; }
 .admin-row textarea { resize: vertical; }
 .admin-row .row-imgcount { font-family: var(--font-mono); font-size: .74rem; color: var(--text-muted); }
@@ -83,7 +83,7 @@
 .admin-photo-card .pc-body { padding: 10px 12px; display: grid; gap: 6px; }
 .admin-photo-card input, .admin-photo-card textarea { width: 100%; padding: .4rem .6rem; border: 1.5px solid var(--border); border-radius: 6px; background: var(--paper); font: inherit; font-size: .84rem; }
 .admin-photo-card .pc-actions { display: flex; gap: 6px; margin-top: 4px; }
-.admin-photo-card .pc-actions button { flex: 1; font-size: .78rem; padding: .4rem; }
+.admin-photo-card .pc-actions button { flex: 1; font-size: .78rem; padding: .4rem; min-height: 44px; }
 
 .admin-form { display: grid; gap: 14px; }
 .admin-form .field label { display: flex; align-items: center; }

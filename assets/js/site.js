@@ -47,30 +47,30 @@
   /* ---------- HEADER ---------- */
   function buildHeader(active) {
     var links = [
-      ["index.html", "Inicio"],
-      ["nosotros.html", "Nosotros"],
-      ["servicios.html", "Servicios"],
-      ["como-trabajamos.html", "Proceso"],
-      ["proyectos.html", "Proyectos"],
-      ["blog.html", "Blog"],
-      ["contacto.html", "Contacto"]
+      ["index", "Inicio", "/"],
+      ["nosotros", "Nosotros", "nosotros"],
+      ["servicios", "Servicios", "servicios"],
+      ["como-trabajamos", "Proceso", "como-trabajamos"],
+      ["proyectos", "Proyectos", "proyectos"],
+      ["blog", "Blog", "blog"],
+      ["contacto", "Contacto", "contacto"]
     ];
     var nav = links.map(function (l) {
       var cur = l[0] === active ? ' aria-current="page"' : "";
-      return '<a href="' + l[0] + '"' + cur + ">" + l[1] + "</a>";
+      return '<a href="' + l[2] + '"' + cur + ">" + l[1] + "</a>";
     }).join("");
     return '' +
       '<header class="site-header" id="siteHeader">' +
         '<div class="container">' +
-          '<a class="brand" href="index.html" aria-label="Gestión Natura, inicio">' +
+          '<a class="brand" href="/" aria-label="Gestión Natura, inicio">' +
             '<img src="' + SITE.logo + '" alt="Logo de Gestión Natura" width="44" height="44">' +
             '<span class="brand-txt"><b>Gestión Natura</b><span>Estudios ambientales</span></span>' +
           '</a>' +
           '<nav class="nav" aria-label="Principal">' +
             '<div class="nav-links" id="navLinks">' + nav +
-              '<a class="btn btn-primary nav-cta" href="contacto.html">Cotizar proyecto ' + wrapArrow() + '</a>' +
+              '<a class="btn btn-primary nav-cta" href="contacto">Cotizar proyecto ' + wrapArrow() + '</a>' +
             '</div>' +
-            '<a class="btn btn-primary" href="contacto.html">Cotizar proyecto ' + wrapArrow() + '</a>' +
+            '<a class="btn btn-primary" href="contacto">Cotizar proyecto ' + wrapArrow() + '</a>' +
             '<button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks"><span></span></button>' +
           '</nav>' +
         '</div>' +
@@ -99,17 +99,17 @@
             '</div>' +
             '<div class="footer-col">' +
               '<h5>Navegación</h5>' +
-              '<a href="index.html">Inicio</a><a href="nosotros.html">Nosotros</a>' +
-              '<a href="servicios.html">Servicios</a><a href="como-trabajamos.html">Proceso</a>' +
-              '<a href="proyectos.html">Proyectos</a><a href="blog.html">Blog</a>' +
-              '<a href="contacto.html">Contacto</a>' +
+              '<a href="/">Inicio</a><a href="nosotros">Nosotros</a>' +
+              '<a href="servicios">Servicios</a><a href="como-trabajamos">Proceso</a>' +
+              '<a href="proyectos">Proyectos</a><a href="blog">Blog</a>' +
+              '<a href="contacto">Contacto</a>' +
             '</div>' +
             '<div class="footer-col">' +
               '<h5>Servicios</h5>' +
-              '<a href="servicios.html">Impacto y riesgo ambiental</a>' +
-              '<a href="servicios.html">Topografía e hidrología</a>' +
-              '<a href="servicios.html">Rellenos sanitarios</a>' +
-              '<a href="servicios.html">Manejo de residuos</a>' +
+              '<a href="servicios">Impacto y riesgo ambiental</a>' +
+              '<a href="servicios">Topografía e hidrología</a>' +
+              '<a href="servicios">Rellenos sanitarios</a>' +
+              '<a href="servicios">Manejo de residuos</a>' +
             '</div>' +
             '<div class="footer-col">' +
               '<h5>Contacto</h5>' +
