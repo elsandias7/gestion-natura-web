@@ -6,6 +6,14 @@
   <title id="pageTitle">Blog, Gestión Natura</title>
   <meta name="description" content="Artículo del blog de Gestión Natura.">
   <meta name="theme-color" content="#0B120C">
+  <meta property="og:title" content="Blog, Gestión Natura" id="ogTitle">
+  <meta property="og:description" content="Artículos y noticias sobre gestión ambiental y rellenos sanitarios." id="ogDesc">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://gestionnatura.pages.dev/blog-post.html" id="ogUrl">
+  <meta property="og:image" content="https://gestionnatura.pages.dev/assets/img/photos/hero-relleno.jpg" id="ogImage">
+  <meta property="og:site_name" content="Gestión Natura">
+  <meta property="og:locale" content="es_MX">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/img/logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,16 +77,41 @@
           body.innerHTML = '<div class="post-empty"><p>' + msg + '</p><p class="mt-5"><a class="btn btn-forest" href="blog.html">Volver al blog</a></p></div>';
         }
 
+        function setMeta(id, value) {
+          var el = document.getElementById(id);
+          if (el && value) el.setAttribute("content", value);
+        }
+
+        function showDraftNotice() {
+          var notice = document.createElement("div");
+          notice.className = "note-banner";
+          notice.style.marginBottom = "var(--space-5)";
+          notice.innerHTML = '<span data-ic="info"></span><span><strong>Vista previa.</strong> Este artículo aún es un borrador y no es visible para el público.</span>';
+          body.parentNode.insertBefore(notice, body);
+          window.GN_fillIcons(notice);
+        }
+
         if (!slug) { showMissing("No se especificó un artículo."); return; }
         if (!window.GN_DB) { showMissing("El blog aún no está conectado a la base de datos. Vuelve pronto."); return; }
 
         window.GN_DB.from("blog_posts").select("*").eq("slug", slug).eq("published", true).maybeSingle()
+          .then(function (res) {
+            if (res.data) return res;
+            // No publicado: solo funciona si hay una sesión de admin activa (RLS lo permite), útil para vista previa de borradores
+            return window.GN_DB.from("blog_posts").select("*").eq("slug", slug).maybeSingle()
+              .then(function (res2) { if (res2.data) res2.isDraft = true; return res2; });
+          })
           .then(function (res) {
             if (res.error || !res.data) { showMissing("No encontramos este artículo, puede que ya no esté disponible."); return; }
             var p = res.data;
             document.title = p.title + ", Gestión Natura";
             heading.textContent = p.title;
             crumb.textContent = p.title;
+            setMeta("ogTitle", p.title);
+            setMeta("ogDesc", p.excerpt);
+            setMeta("ogImage", p.cover_image_url);
+            setMeta("ogUrl", location.href);
+            if (res.isDraft) showDraftNotice();
 
             if (p.external_url) {
               var host = "";

@@ -287,10 +287,45 @@
       if (res.error) { wrap.textContent = "No se pudo cargar."; return; }
       wrap.innerHTML = res.data.map(photoCardHtml).join("");
       res.data.forEach(bindPhotoCard);
+      bindGalleryDragDrop(wrap);
     });
   }
+  var draggedPhotoId = null;
+  function bindGalleryDragDrop(wrap) {
+    wrap.querySelectorAll(".admin-photo-card").forEach(function (card) {
+      card.addEventListener("dragstart", function () {
+        draggedPhotoId = card.getAttribute("data-id");
+        card.classList.add("dragging");
+      });
+      card.addEventListener("dragend", function () {
+        card.classList.remove("dragging");
+        wrap.querySelectorAll(".admin-photo-card").forEach(function (c) { c.classList.remove("drag-over"); });
+        persistGalleryOrder(wrap);
+      });
+      card.addEventListener("dragover", function (e) {
+        e.preventDefault();
+        if (card.getAttribute("data-id") === draggedPhotoId) return;
+        card.classList.add("drag-over");
+      });
+      card.addEventListener("dragleave", function () { card.classList.remove("drag-over"); });
+      card.addEventListener("drop", function (e) {
+        e.preventDefault();
+        card.classList.remove("drag-over");
+        var dragged = wrap.querySelector('.admin-photo-card[data-id="' + draggedPhotoId + '"]');
+        if (!dragged || dragged === card) return;
+        var rect = card.getBoundingClientRect();
+        var before = (e.clientX - rect.left) < rect.width / 2;
+        wrap.insertBefore(dragged, before ? card : card.nextSibling);
+      });
+    });
+  }
+  function persistGalleryOrder(wrap) {
+    var ids = Array.prototype.map.call(wrap.querySelectorAll(".admin-photo-card"), function (c) { return c.getAttribute("data-id"); });
+    Promise.all(ids.map(function (id, i) { return db.from("gallery_photos").update({ sort_order: i }).eq("id", id); }))
+      .catch(function () {});
+  }
   function photoCardHtml(p) {
-    return '<div class="admin-photo-card" data-id="' + p.id + '">' +
+    return '<div class="admin-photo-card" data-id="' + p.id + '" draggable="true">' +
       '<img src="' + adminImgSrc(p.image_url) + '" alt="">' +
       '<div class="pc-body">' +
       '<input type="text" class="f-tag" placeholder="Etiqueta" value="' + escapeHtml(p.tag || "") + '">' +
@@ -372,7 +407,7 @@
       '<span class="row-imgcount">' + imgCount + "</span>" +
       '<label style="display:flex;align-items:center;gap:8px;font-size:.88rem"><input type="checkbox" class="f-pub" style="width:auto"' + (p.published ? " checked" : "") + '> Publicado</label>' +
       "</div>" +
-      '<div class="row-actions"><button class="btn btn-forest btn-save">Guardar</button><button class="btn btn-outline btn-del">Eliminar</button></div>' +
+      '<div class="row-actions"><button class="btn btn-forest btn-save">Guardar</button><a class="btn btn-outline btn-preview" href="../blog-post.html?slug=' + encodeURIComponent(p.slug || "") + '" target="_blank" rel="noopener">Vista previa</a><button class="btn btn-outline btn-del">Eliminar</button></div>' +
       "</div>";
   }
   function bindPostRow(p) {
