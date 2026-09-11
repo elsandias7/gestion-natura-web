@@ -121,15 +121,14 @@
         if (res.error || !res.data || !res.data.length) return; // sin posts publicados: deja los de ejemplo
         el.innerHTML = res.data.map(function (post) {
           var isLink = !!post.external_url;
-          var href = isLink ? post.external_url : ("blog-post.html?slug=" + encodeURIComponent(post.slug));
-          var target = isLink ? ' target="_blank" rel="noopener"' : "";
+          var href = "blog-post.html?slug=" + encodeURIComponent(post.slug);
           return '<article class="svc">' +
-            (post.cover_image_url ? '<a class="blog-thumb" href="' + href + '"' + target + '><img src="' + post.cover_image_url + '" alt="" loading="lazy"></a>' : "") +
+            (post.cover_image_url ? '<a class="blog-thumb" href="' + href + '"><img src="' + post.cover_image_url + '" alt="" loading="lazy"></a>' : "") +
             (post.category ? '<span class="tile-tag">' + escapeHtml(post.category) + "</span>" : "") +
             (isLink ? ' <span class="tile-tag" style="color:var(--gold-600)">Enlace externo</span>' : "") +
-            '<h3 style="margin-top:14px"><a href="' + href + '"' + target + ">" + escapeHtml(post.title) + "</a></h3>" +
+            '<h3 style="margin-top:14px"><a href="' + href + '">' + escapeHtml(post.title) + "</a></h3>" +
             (post.excerpt ? "<p>" + escapeHtml(post.excerpt) + "</p>" : "") +
-            '<a class="svc-link" href="' + href + '"' + target + ">" + (isLink ? "Ver noticia" : "Leer más") + ' <span data-ic="' + (isLink ? "arrowUR" : "arrow") + '"></span></a>' +
+            '<a class="svc-link" href="' + href + '">' + (isLink ? "Ver noticia" : "Leer más") + ' <span data-ic="arrow"></span></a>' +
             "</article>";
         }).join("");
         window.GN_fillIcons(el);
