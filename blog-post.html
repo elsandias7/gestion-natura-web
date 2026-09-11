@@ -32,6 +32,10 @@
     .news-card .lead { font-size: 1.22rem; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
     .news-source { display: flex; align-items: center; gap: .5rem; font-family: var(--font-mono); font-size: .82rem; color: var(--text-muted); margin: var(--space-5) 0; padding-top: var(--space-5); border-top: 1px solid var(--border); }
     .news-source svg { width: 16px; height: 16px; flex: 0 0 auto; }
+    .share-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: var(--space-6); padding-top: var(--space-5); border-top: 1px solid var(--border); }
+    .share-bar .share-label { font-family: var(--font-mono); font-size: .8rem; color: var(--text-muted); margin-right: 4px; }
+    .share-bar .btn { padding: .5rem 1rem; font-size: .88rem; }
+    .share-bar .btn svg { width: 16px; height: 16px; }
   </style>
 </head>
 <body data-page="blog.html">
@@ -82,6 +86,44 @@
           if (el && value) el.setAttribute("content", value);
         }
 
+        function shareBarHtml() {
+          return '<div class="share-bar">' +
+            '<span class="share-label">Compartir:</span>' +
+            '<a class="btn btn-outline" id="shareWa" target="_blank" rel="noopener"><span data-ic="whatsapp"></span> WhatsApp</a>' +
+            '<button type="button" class="btn btn-outline" id="shareCopy"><span data-ic="link"></span> Copiar enlace</button>' +
+            "</div>";
+        }
+        function bindShareBar(title) {
+          var wa = document.getElementById("shareWa");
+          if (wa) wa.href = "https://wa.me/?text=" + encodeURIComponent(title + " " + location.href);
+          var copyBtn = document.getElementById("shareCopy");
+          if (!copyBtn) return;
+          copyBtn.addEventListener("click", function () {
+            function done() {
+              copyBtn.innerHTML = '<span data-ic="check"></span> ¡Copiado!';
+              window.GN_fillIcons(copyBtn);
+              setTimeout(function () {
+                copyBtn.innerHTML = '<span data-ic="link"></span> Copiar enlace';
+                window.GN_fillIcons(copyBtn);
+              }, 2000);
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(location.href).then(done).catch(fallbackCopy);
+            } else {
+              fallbackCopy();
+            }
+            function fallbackCopy() {
+              var ta = document.createElement("textarea");
+              ta.value = location.href;
+              ta.style.position = "fixed"; ta.style.opacity = "0";
+              document.body.appendChild(ta); ta.select();
+              try { document.execCommand("copy"); } catch (e) {}
+              document.body.removeChild(ta);
+              done();
+            }
+          });
+        }
+
         function showDraftNotice() {
           var notice = document.createElement("div");
           notice.className = "note-banner";
@@ -124,8 +166,10 @@
                   (p.excerpt ? '<p class="lead mt-5">' + escapeHtml(p.excerpt) + "</p>" : "") +
                   (host ? '<div class="news-source"><span data-ic="link"></span> Fuente: ' + escapeHtml(host) + "</div>" : "") +
                   '<a class="btn btn-primary" href="' + p.external_url + '" target="_blank" rel="noopener">Leer la noticia completa <span class="arrow" data-ic="arrowUR"></span></a>' +
-                "</div>";
+                "</div>" +
+                shareBarHtml();
               window.GN_fillIcons(body);
+              bindShareBar(p.title);
               return;
             }
 
@@ -135,7 +179,10 @@
             body.innerHTML =
               (p.cover_image_url ? '<div class="cover"><img src="' + p.cover_image_url + '" alt="' + escapeHtml(p.title) + '"></div>' : "") +
               '<div class="content">' + escapeHtml(p.content || p.excerpt || "") + "</div>" +
-              gallery;
+              gallery +
+              shareBarHtml();
+            window.GN_fillIcons(body);
+            bindShareBar(p.title);
           })
           .catch(function () { showMissing("Ocurrió un problema al cargar el artículo."); });
       });
