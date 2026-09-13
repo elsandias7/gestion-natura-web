@@ -580,15 +580,18 @@ body:not(.js-anim) .cell-layer, body:not(.js-anim) .cell-leader, body:not(.js-an
 .proj-map-svg .pm-dot circle.pm-core { fill: var(--gold-500); stroke: var(--ink-950); stroke-width: 1; }
 .proj-map-svg .pm-dot circle.pm-ring { fill: none; stroke: var(--gold-500); stroke-width: 1; opacity: 0; }
 .proj-map-svg .pm-dot text { font-family: var(--font-mono); font-size: 9.5px; font-weight: 700; fill: var(--ink-950); }
+
 .proj-map-svg .pm-num-label { font-family: var(--font-mono); font-size: 10px; fill: var(--text); }
 
 /* Animación: se dibuja al entrar a pantalla, respeta prefers-reduced-motion vía la regla global */
 .proj-map-svg .pm-grid, .proj-map-svg .pm-frame-line, .proj-map-svg .pm-leader { stroke-dashoffset: 1; opacity: 0; transition: opacity .5s var(--ease); }
 .reveal.in .proj-map-svg .pm-grid, .reveal.in .proj-map-svg .pm-frame-line, .reveal.in .proj-map-svg .pm-leader { opacity: 1; }
-.proj-map-svg .pm-dot { opacity: 0; transform: scale(.4); transform-box: fill-box; transform-origin: center; transition: opacity .45s var(--ease-out), transform .45s var(--ease-out); transition-delay: var(--d, 0s); }
-.reveal.in .proj-map-svg .pm-dot { opacity: 1; transform: scale(1); }
-@keyframes pmPulse { 0% { opacity: .55; transform: scale(1); } 100% { opacity: 0; transform: scale(2.6); } }
-.reveal.in .proj-map-svg .pm-dot circle.pm-ring { animation: pmPulse 2.4s var(--ease-out) infinite; animation-delay: var(--d, 0s); }
+.proj-map-svg .pm-dot { opacity: 0; transition: opacity .3s var(--ease-out); transition-delay: var(--d, 0s); }
+.reveal.in .proj-map-svg .pm-dot { opacity: 1; }
+.proj-map-svg .pm-dot circle.pm-core { r: 0; transition: r .4s var(--ease-out); transition-delay: var(--d, 0s); }
+.reveal.in .proj-map-svg .pm-dot circle.pm-core { r: var(--r, 10); }
+@keyframes pmPulse { 0% { opacity: .55; } 100% { opacity: 0; r: 24; } }
+.reveal.in .proj-map-svg .pm-dot circle.pm-ring { animation: pmPulse 2.2s var(--ease-out) infinite; animation-delay: calc(var(--d, 0s) + .4s); }
 
 .proj-map-legend { display: flex; flex-direction: column; gap: 2px; }
 .proj-map-legend li { list-style: none; display: flex; gap: 10px; align-items: baseline; padding: 9px 4px; border-bottom: 1px solid var(--border); font-size: .88rem; }
