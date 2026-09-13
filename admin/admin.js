@@ -10,6 +10,7 @@
     "como-trabajamos": "Proceso", "blog": "Blog"
   };
   var CAT_LABELS = { impacto: "Impacto ambiental", topografia: "Topografía", rellenos: "Rellenos sanitarios", residuos: "Manejo de residuos" };
+  var ADMIN_EMAIL = "capistran712@gmail.com";
 
   var db = null;
   var currentCat = "impacto";
@@ -31,14 +32,14 @@
       if (event === "SIGNED_OUT") { show("loginScreen"); }
     });
 
+    document.getElementById("loginEmail").value = ADMIN_EMAIL;
     document.getElementById("loginForm").addEventListener("submit", function (e) {
       e.preventDefault();
-      var email = document.getElementById("loginEmail").value.trim();
       var pass = document.getElementById("loginPass").value;
       var err = document.getElementById("loginError");
       err.hidden = true;
-      db.auth.signInWithPassword({ email: email, password: pass }).then(function (res) {
-        if (res.error) { err.textContent = "Correo o contraseña incorrectos."; err.hidden = false; }
+      db.auth.signInWithPassword({ email: ADMIN_EMAIL, password: pass }).then(function (res) {
+        if (res.error) { err.textContent = "Contraseña incorrecta."; err.hidden = false; }
       });
     });
 

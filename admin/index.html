@@ -28,9 +28,9 @@
     <form id="loginForm" class="admin-gate-card">
       <img src="../assets/img/logo.jpg" alt="Gestión Natura" width="48" height="48" style="border-radius:10px">
       <h1>Panel de Gestión Natura</h1>
-      <p>Inicia sesión con el correo que te dio tu administrador.</p>
-      <div class="field"><label for="loginEmail">Correo</label><input type="email" id="loginEmail" required autocomplete="username"></div>
-      <div class="field"><label for="loginPass">Contraseña</label><input type="password" id="loginPass" required autocomplete="current-password"></div>
+      <p>Ingresa tu contraseña para entrar al panel.</p>
+      <input type="hidden" id="loginEmail" autocomplete="username">
+      <div class="field"><label for="loginPass">Contraseña</label><input type="password" id="loginPass" required autocomplete="current-password" autofocus></div>
       <button class="btn btn-forest" type="submit" style="width:100%;justify-content:center">Entrar</button>
       <p class="admin-error" id="loginError" hidden></p>
     </form>
@@ -152,6 +152,6 @@
   <script src="../assets/js/icons.js?v=1"></script>
   <script src="../assets/vendor/supabase.min.js"></script>
   <script src="../assets/js/supabase.config.js?v=2"></script>
-  <script src="admin.js?v=8"></script>
+  <script src="admin.js?v=9"></script>
 </body>
 </html>
