@@ -560,6 +560,46 @@ body:not(.js-anim) .cell-layer, body:not(.js-anim) .cell-leader, body:not(.js-an
 .ba-handle svg { width: 22px; height: 22px; }
 .ba-range { position: absolute; inset: 0; z-index: 7; opacity: 0; cursor: ew-resize; width: 100%; height: 100%; }
 
+/* ============================================================
+   MAPA DE PROYECTOS EJECUTADOS (plano técnico, no mapa genérico)
+   ============================================================ */
+.proj-map { display: grid; grid-template-columns: 1.55fr 1fr; gap: var(--space-6); align-items: start; }
+.proj-map-frame { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.proj-map-svg { width: 100%; height: auto; display: block; }
+.proj-map-svg .pm-grid { stroke: var(--line); stroke-width: 1; stroke-dasharray: 4 4; }
+.proj-map-svg .pm-frame-line { stroke: var(--border); stroke-width: 1.4; fill: none; }
+.proj-map-svg .pm-tick { font-family: var(--font-mono); font-size: 10px; fill: var(--text-muted); }
+.proj-map-svg .pm-cross { stroke: var(--moss-500); stroke-width: 1.4; }
+.proj-map-svg .pm-north text { font-family: var(--font-mono); font-size: 11px; fill: var(--text-muted); font-weight: 600; }
+.proj-map-svg .pm-north path { fill: var(--moss-600); }
+.proj-map-svg .pm-scale-line { stroke: var(--text-muted); stroke-width: 1.4; }
+.proj-map-svg .pm-scale-text { font-family: var(--font-mono); font-size: 10px; fill: var(--text-muted); }
+.proj-map-svg .pm-inset-box { fill: var(--paper); stroke: var(--moss-600); stroke-width: 1.4; stroke-dasharray: 3 3; }
+.proj-map-svg .pm-inset-label { font-family: var(--font-mono); font-size: 10px; fill: var(--moss-700, var(--moss-600)); font-weight: 600; letter-spacing: .02em; }
+.proj-map-svg .pm-leader { stroke: var(--moss-500); stroke-width: 1.2; stroke-dasharray: 3 3; fill: none; }
+.proj-map-svg .pm-dot circle.pm-core { fill: var(--gold-500); stroke: var(--ink-950); stroke-width: 1; }
+.proj-map-svg .pm-dot circle.pm-ring { fill: none; stroke: var(--gold-500); stroke-width: 1; opacity: 0; }
+.proj-map-svg .pm-dot text { font-family: var(--font-mono); font-size: 9.5px; font-weight: 700; fill: var(--ink-950); }
+.proj-map-svg .pm-num-label { font-family: var(--font-mono); font-size: 10px; fill: var(--text); }
+
+/* Animación: se dibuja al entrar a pantalla, respeta prefers-reduced-motion vía la regla global */
+.proj-map-svg .pm-grid, .proj-map-svg .pm-frame-line, .proj-map-svg .pm-leader { stroke-dashoffset: 1; opacity: 0; transition: opacity .5s var(--ease); }
+.reveal.in .proj-map-svg .pm-grid, .reveal.in .proj-map-svg .pm-frame-line, .reveal.in .proj-map-svg .pm-leader { opacity: 1; }
+.proj-map-svg .pm-dot { opacity: 0; transform: scale(.4); transform-box: fill-box; transform-origin: center; transition: opacity .45s var(--ease-out), transform .45s var(--ease-out); transition-delay: var(--d, 0s); }
+.reveal.in .proj-map-svg .pm-dot { opacity: 1; transform: scale(1); }
+@keyframes pmPulse { 0% { opacity: .55; transform: scale(1); } 100% { opacity: 0; transform: scale(2.6); } }
+.reveal.in .proj-map-svg .pm-dot circle.pm-ring { animation: pmPulse 2.4s var(--ease-out) infinite; animation-delay: var(--d, 0s); }
+
+.proj-map-legend { display: flex; flex-direction: column; gap: 2px; }
+.proj-map-legend li { list-style: none; display: flex; gap: 10px; align-items: baseline; padding: 9px 4px; border-bottom: 1px solid var(--border); font-size: .88rem; }
+.proj-map-legend li b { font-family: var(--font-mono); color: var(--gold-600); flex: 0 0 auto; min-width: 2.4em; }
+.proj-map-legend li span.pm-year { margin-left: auto; font-family: var(--font-mono); font-size: .74rem; color: var(--text-muted); flex: 0 0 auto; }
+.proj-map-caption { font-family: var(--font-mono); font-size: .74rem; color: var(--text-muted); margin-top: var(--space-3); }
+
+@media (max-width: 860px) {
+  .proj-map { grid-template-columns: 1fr; }
+}
+
 /* SECTORES */
 .sectors { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: var(--space-4); }
 .sector { border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-5); background: var(--surface); }
