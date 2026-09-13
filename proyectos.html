@@ -18,7 +18,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=34">
+  <link rel="stylesheet" href="assets/css/style.css?v=35">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css">
 </head>
 <body data-page="proyectos">
 
@@ -32,7 +35,7 @@
     </div>
   </section>
 
-  <!-- Mapa de proyectos ejecutados (plano técnico, coordenadas reales) -->
+  <!-- Mapa de proyectos ejecutados (mapa real, Leaflet + OpenStreetMap) -->
   <section class="section band-surface">
     <div class="container">
       <div class="section-head reveal">
@@ -42,78 +45,24 @@
       </div>
       <div class="proj-map reveal">
         <div class="proj-map-frame">
-          <svg class="proj-map-svg" viewBox="0 0 780 580" role="img" aria-label="Plano con 12 proyectos ejecutados por Gestión Natura en el sur y centro de Veracruz, numerados del 01 al 12">
-            <!-- Cuadrícula -->
-            <line class="pm-grid" x1="160" y1="40" x2="160" y2="520"/>
-            <line class="pm-grid" x1="292" y1="40" x2="292" y2="520"/>
-            <line class="pm-grid" x1="425" y1="40" x2="425" y2="520"/>
-            <line class="pm-grid" x1="557" y1="40" x2="557" y2="520"/>
-            <line class="pm-grid" x1="60" y1="484" x2="560" y2="484"/>
-            <line class="pm-grid" x1="60" y1="344" x2="560" y2="344"/>
-            <line class="pm-grid" x1="60" y1="203" x2="560" y2="203"/>
-            <!-- Marco -->
-            <rect class="pm-frame-line" x="60" y="40" width="500" height="480"/>
-            <g class="pm-cross"><path d="M55,40 H65 M60,35 V45"/></g>
-            <g class="pm-cross"><path d="M555,40 H565 M560,35 V45"/></g>
-            <g class="pm-cross"><path d="M55,520 H65 M60,515 V525"/></g>
-            <g class="pm-cross"><path d="M555,520 H565 M560,515 V525"/></g>
-            <!-- Etiquetas de ejes -->
-            <text class="pm-tick" x="160" y="534" text-anchor="middle">97°O</text>
-            <text class="pm-tick" x="292" y="534" text-anchor="middle">96°O</text>
-            <text class="pm-tick" x="425" y="534" text-anchor="middle">95°O</text>
-            <text class="pm-tick" x="557" y="534" text-anchor="middle">94°O</text>
-            <text class="pm-tick" x="50" y="488" text-anchor="end">18°N</text>
-            <text class="pm-tick" x="50" y="348" text-anchor="end">19°N</text>
-            <text class="pm-tick" x="50" y="207" text-anchor="end">20°N</text>
-            <!-- Norte -->
-            <g class="pm-north">
-              <path d="M520,58 L526,74 L520,70 L514,74 Z"/>
-              <text x="520" y="52" text-anchor="middle">N</text>
-            </g>
-            <!-- Escala -->
-            <line class="pm-scale-line" x1="90" y1="495" x2="216" y2="495"/>
-            <line class="pm-scale-line" x1="90" y1="490" x2="90" y2="500"/>
-            <line class="pm-scale-line" x1="216" y1="490" x2="216" y2="500"/>
-            <text class="pm-scale-text" x="153" y="512" text-anchor="middle">100 km aprox.</text>
-            <!-- Recuadro de la zona ampliada + línea guía al detalle -->
-            <rect class="pm-leader" x="452" y="458" width="76" height="30"/>
-            <text class="pm-inset-label" x="452" y="452">ver detalle ↗</text>
-            <path class="pm-leader" d="M519,462 L580,210"/>
-            <!-- Proyectos individuales -->
-            <g class="pm-dot" style="--d:0.05s;--r:10"><circle class="pm-ring" cx="393.3" cy="428.5" r="10"/><circle class="pm-core" cx="393.3" cy="428.5" r="10"/><text x="393.3" y="431.7" text-anchor="middle">09</text></g>
-            <g class="pm-dot" style="--d:0.1s;--r:10"><circle class="pm-ring" cx="262.8" cy="311.2" r="10"/><circle class="pm-core" cx="262.8" cy="311.2" r="10"/><text x="262.8" y="314.4" text-anchor="middle">10</text></g>
-            <g class="pm-dot" style="--d:0.15s;--r:10"><circle class="pm-ring" cx="252.6" cy="308.4" r="10"/><circle class="pm-core" cx="252.6" cy="308.4" r="10"/><text x="252.6" y="311.6" text-anchor="middle">11</text></g>
-            <g class="pm-dot" style="--d:0.2s;--r:10"><circle class="pm-ring" cx="101.7" cy="80" r="10"/><circle class="pm-core" cx="101.7" cy="80" r="10"/><text x="101.7" y="83.2" text-anchor="middle">12</text></g>
-            <!-- Detalle: corredor Coatzacoalcos-Minatitlán -->
-            <g transform="translate(580,40)">
-              <rect class="pm-inset-box" x="0" y="0" width="180" height="195"/>
-              <text class="pm-inset-label" x="10" y="17">DETALLE — 8 PROYECTOS</text>
-              <text class="pm-scale-text" x="170" y="187" text-anchor="end">sin escala</text>
-              <g class="pm-dot" style="--d:0.25s;--r:7"><circle class="pm-ring" cx="97.5" cy="51.2" r="7"/><circle class="pm-core" cx="97.5" cy="51.2" r="7"/><text x="97.5" y="53.7" text-anchor="middle" style="font-size:7.5px">01</text></g>
-              <g class="pm-dot" style="--d:0.3s;--r:7"><circle class="pm-ring" cx="103.7" cy="53.9" r="7"/><circle class="pm-core" cx="103.7" cy="53.9" r="7"/><text x="103.7" y="56.4" text-anchor="middle" style="font-size:7.5px">02</text></g>
-              <g class="pm-dot" style="--d:0.35s;--r:7"><circle class="pm-ring" cx="133.4" cy="65.6" r="7"/><circle class="pm-core" cx="133.4" cy="65.6" r="7"/><text x="133.4" y="68.1" text-anchor="middle" style="font-size:7.5px">03</text></g>
-              <g class="pm-dot" style="--d:0.4s;--r:7"><circle class="pm-ring" cx="140" cy="57.7" r="7"/><circle class="pm-core" cx="140" cy="57.7" r="7"/><text x="140" y="60.2" text-anchor="middle" style="font-size:7.5px">04</text></g>
-              <g class="pm-dot" style="--d:0.45s;--r:7"><circle class="pm-ring" cx="118.4" cy="69.1" r="7"/><circle class="pm-core" cx="118.4" cy="69.1" r="7"/><text x="118.4" y="71.6" text-anchor="middle" style="font-size:7.5px">05</text></g>
-              <g class="pm-dot" style="--d:0.5s;--r:8"><circle class="pm-ring" cx="87.6" cy="74.2" r="8"/><circle class="pm-core" cx="87.6" cy="74.2" r="8"/><text x="87.6" y="76.7" text-anchor="middle" style="font-size:6.6px">06/07</text></g>
-              <g class="pm-dot" style="--d:0.55s;--r:7"><circle class="pm-ring" cx="40" cy="71.5" r="7"/><circle class="pm-core" cx="40" cy="71.5" r="7"/><text x="40" y="74" text-anchor="middle" style="font-size:7.5px">08</text></g>
-            </g>
-          </svg>
+          <div id="projLeaflet" class="proj-leaflet" role="img" aria-label="Mapa con 12 proyectos ejecutados por Gestión Natura en el sur y centro de Veracruz"></div>
         </div>
         <div>
-          <ol class="proj-map-legend">
-            <li><b>01</b> PE Saneamiento basurero <span class="pm-year">2005</span></li>
-            <li><b>02</b> Estación de transferencia</li>
-            <li><b>03</b> MIA relleno</li>
-            <li><b>04</b> PE y MIA relleno</li>
-            <li><b>05</b> PE y MIA relleno</li>
-            <li><b>06–07</b> Saneamiento I y II / Supervisión de saneamiento</li>
-            <li><b>08</b> PE y MIA relleno</li>
-            <li><b>09</b> Asesoría PE</li>
-            <li><b>10</b> Construcción, operación y clausura</li>
-            <li><b>11</b> Selección y construcción RS</li>
-            <li><b>12</b> PE, MIA y construcción RS</li>
+          <ol class="proj-map-legend" id="projMapLegend">
+            <li data-idx="0"><b>01</b> PE Saneamiento basurero <span class="pm-year">2005</span></li>
+            <li data-idx="1"><b>02</b> Estación de transferencia</li>
+            <li data-idx="2"><b>03</b> MIA relleno</li>
+            <li data-idx="3"><b>04</b> PE y MIA relleno</li>
+            <li data-idx="4"><b>05</b> PE y MIA relleno</li>
+            <li data-idx="5"><b>06</b> Saneamiento I y II</li>
+            <li data-idx="6"><b>07</b> Supervisión de saneamiento</li>
+            <li data-idx="7"><b>08</b> PE y MIA relleno</li>
+            <li data-idx="8"><b>09</b> Asesoría PE</li>
+            <li data-idx="9"><b>10</b> Construcción, operación y clausura</li>
+            <li data-idx="10"><b>11</b> Selección y construcción RS</li>
+            <li data-idx="11"><b>12</b> PE, MIA y construcción RS</li>
           </ol>
-          <p class="proj-map-caption">PE = Proyecto Ejecutivo · MIA = Manifiesto de Impacto Ambiental · RS = Residuos Sólidos</p>
+          <p class="proj-map-caption">PE = Proyecto Ejecutivo · MIA = Manifiesto de Impacto Ambiental · RS = Residuos Sólidos. Da clic en un punto del mapa o en la lista para ubicarlo.</p>
         </div>
       </div>
     </div>
@@ -244,5 +193,67 @@
   <script src="assets/vendor/supabase.min.js"></script>
   <script src="assets/js/supabase.config.js?v=2"></script>
   <script src="assets/js/data.js?v=4"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
+  <script>
+    (function () {
+      var el = document.getElementById("projLeaflet");
+      if (!el || !window.L) return;
+
+      var PROJECTS = [
+        { name: "PE Saneamiento basurero", lat: 18.128819639538, lng: -94.47889760492306, year: "2005" },
+        { name: "Estación de transferencia", lat: 18.11730943959544, lng: -94.45142867542434 },
+        { name: "MIA relleno", lat: 18.06856828704237, lng: -94.3199786278942 },
+        { name: "PE y MIA relleno", lat: 18.10159511565907, lng: -94.29078807779493 },
+        { name: "PE y MIA relleno", lat: 18.05401853455533, lng: -94.38636894054579 },
+        { name: "Saneamiento I y II", lat: 18.03197621824111, lng: -94.52396558545755 },
+        { name: "Supervisión de saneamiento", lat: 18.03358759029423, lng: -94.52159294773348 },
+        { name: "PE y MIA relleno", lat: 18.04404316130705, lng: -94.73365905256743 },
+        { name: "Asesoría PE", lat: 18.39855360945191, lng: -95.23890729292981 },
+        { name: "Construcción, operación y clausura", lat: 19.23254139811591, lng: -96.22288852406437 },
+        { name: "Selección y construcción RS", lat: 19.25222573867729, lng: -96.29984507941525 },
+        { name: "PE, MIA y construcción RS", lat: 20.87661876030612, lng: -97.43771558090151 }
+      ];
+
+      var map = L.map(el, { scrollWheelZoom: false });
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 18,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
+      }).addTo(map);
+      el.addEventListener("click", function () { map.scrollWheelZoom.enable(); });
+      el.addEventListener("mouseleave", function () { map.scrollWheelZoom.disable(); });
+
+      function numberIcon(n) {
+        return L.divIcon({ className: "pm-leaflet-icon", html: "<span>" + n + "</span>", iconSize: [28, 28], iconAnchor: [14, 14], popupAnchor: [0, -14] });
+      }
+
+      var clusters = L.markerClusterGroup({
+        maxClusterRadius: 40,
+        iconCreateFunction: function (cluster) {
+          return L.divIcon({ className: "pm-leaflet-cluster", html: "<span>" + cluster.getChildCount() + "</span>", iconSize: [38, 38] });
+        }
+      });
+
+      var markers = PROJECTS.map(function (p, i) {
+        var num = ("0" + (i + 1)).slice(-2);
+        var gmaps = "https://www.google.com/maps?q=" + p.lat + "," + p.lng;
+        var popup = "<b>" + num + " · " + p.name + "</b>" + (p.year ? " (" + p.year + ")" : "") +
+          '<br><a href="' + gmaps + '" target="_blank" rel="noopener">Ver ubicación en Google Maps ↗</a>';
+        var m = L.marker([p.lat, p.lng], { icon: numberIcon(num) }).bindPopup(popup);
+        clusters.addLayer(m);
+        return m;
+      });
+      map.addLayer(clusters);
+      map.fitBounds(L.latLngBounds(PROJECTS.map(function (p) { return [p.lat, p.lng]; })), { padding: [30, 30] });
+
+      document.querySelectorAll("#projMapLegend li").forEach(function (li) {
+        li.addEventListener("click", function () {
+          var i = parseInt(li.getAttribute("data-idx"), 10);
+          var m = markers[i];
+          clusters.zoomToShowLayer(m, function () { m.openPopup(); });
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
